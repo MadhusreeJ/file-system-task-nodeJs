@@ -1,6 +1,7 @@
 const express = require("express")
 const fs = require("fs");
-const path = require("path")
+const path = require("path");
+const { message } = require("statuses");
 const app = express();
 
 const port = process.env.PORT || 3000;
@@ -18,13 +19,18 @@ app.get("/createfile",(req,res) =>{
 
     fs.writeFile(file, data, function (err) {
         if (err) {
-         res.json({message:"Something went wrong"});
+         res.send("Something went wrong");
          return console.log(err);
         }
-        res.json({message:"File created successfully"});
-        console.log("File saved");
+        const responseData= {
+            message : "File created successfully",
+            fileData : data
+        }
+        res.json(responseData);
+        console.log("File created successfully");
     
       });
+
 })
 
 
